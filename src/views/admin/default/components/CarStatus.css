@@ -1,0 +1,12 @@
+@keyframes slidein {
+    from {
+
+      width: 0%;
+    }
+  
+  
+    to {
+
+      width: 90%;
+    }
+  }
