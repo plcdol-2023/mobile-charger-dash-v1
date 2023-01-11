@@ -1,6 +1,3 @@
-// import React from 'react';
-import { useEffect, useState } from "react";
-
 //chakra components
 import Card from "components/card/Card";
 import {
@@ -14,8 +11,7 @@ import {
   useColorModeValue,
   CircularProgress,
 } from "@chakra-ui/react";
-//mongo configuration
-import { app, credentials } from "util/mongoConfig";
+
 // Custom components
 import IconBox from "components/icons/IconBox";
 import { IoCheckmarkCircle } from "react-icons/io5";
@@ -23,9 +19,7 @@ import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import "./CarStatus.css";
 
-const timer = (ms) => new Promise((res) => setTimeout(res, ms));
-
-const CarStatus = () => {
+const CarStatus = ({ user, parkingStatus, loading }) => {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -42,52 +36,6 @@ const CarStatus = () => {
     { bg: "whiteAlpha.100" }
   );
 
-  // Set state variables
-  const [user, setUser] = useState();
-  const [events, setEvents] = useState({});
-  const [parkingStatus, setParkingStatus] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // This useEffect hook will run only once when the page is loaded : load DB data once
-  useEffect(() => {
-    const login = async () => {
-      const loginUser = await app.logIn(credentials);
-
-      // Connect to the database
-      const mongodb = app.currentUser.mongoClient("mongodb-atlas");
-      const collection = mongodb.db("parking").collection("status");
-      const status = await collection.find({});
-      setParkingStatus(status);
-      console.log("parking status updated");
-
-      setUser(()=>loginUser);
-      console.log("login complete, subscribing to events");
-      // Everytime a change happens in the stream, add it to the list of events
-      for await (const change of collection.watch()) {
-        setEvents(() => change);
-      }
-    };
-    login();
-    return () => {};
-  }, []);
-
-  //DB events handler
-  useEffect(() => {
-    if (events.operationType === "update") {
-      const locationNum = events.fullDocument.location - 1;
-      let newParkingStatus = [...parkingStatus];
-      newParkingStatus[locationNum] = events.fullDocument;
-      setParkingStatus(() => [...newParkingStatus]);
-      timer(300).then(() => {
-        setLoading(false);
-      });
-    }
-    return () => {
-      setLoading(true);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events]);
-
   return (
     <>
       {!user && <CircularProgress isIndeterminate />}
@@ -100,6 +48,7 @@ const CarStatus = () => {
               direction="column"
               w="100%"
               h="50vh"
+              minH="500px"
               mb="0px"
               key={index}
             >
