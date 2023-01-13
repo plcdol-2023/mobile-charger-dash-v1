@@ -47,8 +47,8 @@ const CarStatus = ({ user, parkingStatus, loading }) => {
               align="flex-start"
               direction="column"
               w="100%"
-              h="50vh"
-              minH="500px"
+              h="60vh"
+              minH="600px"
               mb="0px"
               key={index}
             >
@@ -160,6 +160,26 @@ const CarStatus = ({ user, parkingStatus, loading }) => {
                     >
                       - 차량번호 : {garage.carnum}
                     </Text>
+                    {/* 차고상태 */}
+                    <Text
+                      color={textColor}
+                      fontSize="20px"
+                      fontWeight="500"
+                      lineHeight="100%"
+                      textAlign="left"
+                      ml="10px" // 좌측 margin
+                      my="20px" // 상하 margin
+                    >
+                      - 차량 상태 :{" "}
+                      <Badge
+                        colorScheme={garage.carstatus ? "blue" : "red"}
+                        fontSize="18px"
+                        variant="outline"
+                      >
+                        {" "}
+                        {garage.carstatus ? "정상" : "점검필요"}
+                      </Badge>
+                    </Text>
                     {/* 충전 상태 */}
                     <Text
                       color={textColor}
@@ -201,6 +221,7 @@ const CarStatus = ({ user, parkingStatus, loading }) => {
                     >
                       - 최종검사시간 : {garage.checktime.toLocaleString()}
                     </Text>
+                    {/* 차고상태 */}
                     <Text
                       color={textColor}
                       fontSize="20px"
