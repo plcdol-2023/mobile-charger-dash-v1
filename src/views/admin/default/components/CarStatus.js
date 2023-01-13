@@ -172,12 +172,12 @@ const CarStatus = ({ user, parkingStatus, loading }) => {
                     >
                       - 차량 상태 :{" "}
                       <Badge
-                        colorScheme={garage.carstatus ? "blue" : "red"}
+                        colorScheme={garage.carstatus ? "blue" : (garage.carstatus===""?"green":"red")}
                         fontSize="18px"
                         variant="outline"
                       >
-                        {" "}
-                        {garage.carstatus ? "정상" : "점검필요"}
+                        {!garage.carstatus && garage.carstatus==="" ? "차량없음":"점검필요"}
+                        {garage.carstatus && "정상"}
                       </Badge>
                     </Text>
                     {/* 충전 상태 */}
