@@ -99,9 +99,17 @@ export default function UserReports() {
   return (
     <>
       {!user && (
-        <Flex justify="center" flexDirection="column"align="center" w="100%" h="100vh">
+        <Flex
+          justify="center"
+          flexDirection="column"
+          align="center"
+          w="100%"
+          h="100vh"
+        >
           <CircularProgress isIndeterminate />
-          <Text fontWeight={700} fontSize={30} mt={30}>"로딩 중.."</Text>
+          <Text fontWeight={700} fontSize={30} mt={30}>
+            "로딩 중.."
+          </Text>
         </Flex>
       )}
       {user && (
@@ -170,8 +178,8 @@ export default function UserReports() {
                   </Select>
                 </Flex>
               }
-              name="재정상태"
-              value="$1,000"
+              name="정산 금액"
+              value="$2,531"
             />
             <MiniStatistics
               startContent={
@@ -207,7 +215,7 @@ export default function UserReports() {
           </SimpleGrid>
           {/* 작업차트 */}
           <SimpleGrid
-            columns={{ base: 1, md: 2, "2xl": 3 }}
+            columns={{ base: 1, sm: 1, md: 2, lg: 2, xl: 2, "2xl": 3 }}
             gap="20px"
             mb="20px"
           >
